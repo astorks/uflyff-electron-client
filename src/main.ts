@@ -9,16 +9,17 @@ function createWindow() {
     width: 1280,
     height: 720,
     icon: path.join(__dirname, "../img/favicon.png"),
-    titleBarStyle: "hidden",
+    titleBarStyle: 'hidden',
+
     webPreferences: {
       preload: path.join(__dirname, "preload.js"),
       webviewTag: true,
     },
   });
 
+  wnd.setWindowButtonVisibility(false);
   wnd.loadFile(path.join(__dirname, "../index.html"));
 //   wnd.webContents.openDevTools();
-
   return wnd;
 }
 
@@ -41,6 +42,7 @@ function windowShowFlyffipedia() {
         },
     });
 
+    flyffipediaWindow.setWindowButtonVisibility(false);
     flyffipediaWindow.loadFile(path.join(__dirname, "../flyffipedia.html"));
 }
 
@@ -64,6 +66,7 @@ function windowShowMadrigalinside() {
         },
     });
 
+    madrigalinsideWindow.setWindowButtonVisibility(false);
     madrigalinsideWindow.loadFile(path.join(__dirname, "../madrigalinside.html"));
 }
 
@@ -86,6 +89,7 @@ function windowShowFlyffulator() {
         },
     });
 
+    flyffulatorWindow.setWindowButtonVisibility(false);
     flyffulatorWindow.loadFile(path.join(__dirname, "../flyffulator.html"));
 }
 
@@ -108,6 +112,7 @@ function windowShowMadrigalmaps() {
         },
     });
 
+    madrigalmapsWindow.setWindowButtonVisibility(false);
     madrigalmapsWindow.loadFile(path.join(__dirname, "../madrigalmaps.html"));
 }
 
@@ -130,6 +135,7 @@ function windowShowModelviewer() {
         },
     });
 
+    modelviewerWindow.setWindowButtonVisibility(false);
     modelviewerWindow.loadFile(path.join(__dirname, "../modelviewer.html"));
 }
 

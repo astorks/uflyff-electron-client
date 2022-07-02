@@ -30,8 +30,12 @@
           </ul>
         </div>
         <button class="title-menu-btn new-window-btn"><i class="bi bi-window-plus"></i></button>
-        <button class="title-menu-btn home-btn disabled" disabled><i class="bi bi-house"></i></button>
-        <button class="title-menu-btn play-btn disabled" disabled><i class="bi bi-play"></i></button>
+        <button class="title-menu-btn home-btn" disabled><i class="bi bi-house"></i></button>
+        <button class="title-menu-btn play-btn" disabled><i class="bi bi-play"></i></button>
+        <button class="title-menu-btn toggle-mute-btn" disabled>
+          <i class="bi bi-volume-mute icon-muted"></i>
+          <i class="bi bi-volume-up icon-unmuted"></i>
+        </button>
         
       </div>
       <div class="title-bar-btn-wrapper">
@@ -42,7 +46,7 @@
       </div>
     </div>
 
-    <webview class="game-view"></webview>
+    <webview class="game-view" allowpopups="true"></webview>
 
     <!-- Modal -->
     <div class="modal fade" id="select-profile-modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="select-profile-modal-label" aria-hidden="true">
@@ -250,6 +254,10 @@
         else if(e.level == 1) console.info('[GAME]', e.message);
         else if(e.level == 2) console.warn('[GAME]', e.message);
         else if(e.level == 3) console.error('[GAME]', e.message);
+      });
+
+      gameview.addEventListener('new-window', (e) => {
+        console.log(e);
       })
 
       document.querySelector('.fullscreen-btn')?.addEventListener('click', () => window.electronAPI.windowFullscreen());
@@ -263,6 +271,7 @@
       document.querySelector('.modelviewer-btn')?.addEventListener('click', () => console.log(window.electronAPI.windowShowModelviewer()));
       document.querySelector('.home-btn')?.addEventListener('click', (e) => { gameview.src = 'https://universe.flyff.com/user/login'; });
       document.querySelector('.play-btn')?.addEventListener('click', () => { gameview.src = 'https://universe.flyff.com/play'; });
+      document.querySelector('.toggle-mute-btn')?.addEventListener('click', () => game.toggleAudioMute());
       document.querySelector('.new-window-btn')?.addEventListener('click', () => window.electronAPI.windowCreate());
       
     </script>
@@ -288,6 +297,14 @@
         },
         copy: () => gameview.copy(),
         paste: () => gameview.paste(),
+        toggleAudioMute: () => {
+          gameview.audioMuted = !gameview.audioMuted;
+          if(gameview.audioMuted) {
+            document.querySelector('.toggle-mute-btn').classList.add('muted');
+          } else {
+            document.querySelector('.toggle-mute-btn').classList.remove('muted');
+          }
+        },
         selectProfile: (profile) => {
           if(game.selectedProfile) return;
           gameview.partition = 'persist:' + profile.key;
@@ -295,6 +312,7 @@
           selectProfileDialog.hide();
           document.querySelector('.home-btn').disabled = false;
           document.querySelector('.play-btn').disabled = false;
+          document.querySelector('.toggle-mute-btn').disabled = false;
           document.querySelector('.title-bar-title').innerText = 'Flyff Universe - ' + profile.name;
           document.querySelector('title').innerText = 'Flyff Universe - ' + profile.name;
           game.selectProfile = profile;

@@ -50,6 +50,21 @@ body.gameview {
   -webkit-app-region: no-drag;
 }
 
+.toggle-mute-btn .icon-muted {
+  display: none;
+}
+
+.toggle-mute-btn .icon-unmuted {
+  display: initial;
+}
+
+.toggle-mute-btn.muted .icon-muted {
+  display: initial;
+}
+
+.toggle-mute-btn.muted .icon-unmuted {
+  display: none;
+}
 
 .title-bar-wrapper {
     height: 32px;

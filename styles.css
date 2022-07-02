@@ -1,0 +1,243 @@
+/* styles.css */
+
+/* Add styles here to customize the appearance of your app */
+html, body {
+    margin: 0;
+}
+body {
+  width: 100vw;
+  height: 100vh;
+  background-image: url('./img/background.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  user-select: none;
+}
+
+.hidden, .template {
+  display: none;
+}
+
+.profile-select a {
+  cursor: pointer;
+}
+
+.game-view, #web-view {
+    width: 100vw;
+    height: calc(100vh - 32px);
+    position: absolute;
+    top: 32px;
+    left: 0;
+}
+
+.game-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    color: #ffffff;
+    background-color: rgba(0,0,0, 0.8);
+    display: none;
+}
+
+.profile-select {
+  background: none;
+  border: none;
+  color: #ffffff;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 13px;
+  -webkit-app-region: no-drag;
+}
+
+
+.title-bar-wrapper {
+    height: 32px;
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    position: fixed;
+    padding: 0px;
+    top: 0;
+    -webkit-app-region: drag;
+    background: #1f1f1f;
+    z-index: 999999;
+  }
+
+  .title-bar-menu-wrapper {
+    flex-grow: 1;
+    padding: 0 6px;
+  }
+
+  .title-bar-menu-wrapper .dropdown {
+    display: inline-block;
+    -webkit-app-region: no-drag;
+  }
+
+  .title-bar-title {
+    color: #ffffff;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 13px;
+  }
+
+  .title-bar-icon {
+    width: 16px;
+    height: 16px;
+    margin: 6px;
+  }
+
+  .title-bar-btn-wrapper {
+    margin-right: 6px;
+    margin-top: 3px;
+  }
+
+  .title-menu-btn {
+    /* margin: 0 3px; */
+    cursor: pointer;
+    display: inline-flex;
+    -webkit-app-region: no-drag;
+    padding: 0 3px;
+    background: none;
+    border: none;
+    color: #ffffff;
+    height: 32px;
+    font-size: 19px;
+    padding-top: 3px;
+  }
+
+  .title-menu-btn-txt {
+    cursor: pointer;
+    display: inline-flex;
+    -webkit-app-region: no-drag;
+    padding: 0 3px;
+    background: none;
+    border: none;
+    color: #ffffff;
+    font-size: 12px;
+  }
+
+  .title-menu-btn::after {
+    display: none;
+  }
+
+  .title-menu-btn:disabled {
+    color: rgba(255,255,255, 0.25);
+    cursor: default;
+  }
+  
+  .title-btn {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin-right: 3px;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    display: inline-flex;
+    -webkit-app-region: no-drag;
+    padding: 0;
+  }
+  
+  
+  .title-btn:before, .title-btn:after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    opacity: 0;
+    transition: all 300ms ease-in-out;
+  }
+  
+  .close-btn {
+    background: #FF5D5B;
+    border: 1px solid #CF544D;
+  }
+  
+  .min-btn {
+    background: #FFBB39;
+    border: 1px solid #CFA64E;
+  }
+  
+  .max-btn {
+    background: #00CD4E;
+    border: 1px solid #0EA642;
+  }
+
+  .fullscreen-btn {
+    background: #5b8fff;
+    border: 1px solid #5b79ff;
+  }
+  
+  /* Close btn */
+  .title-btn:before, .title-btn:after {
+    width: 50%;
+    height: 50%;
+    background: #1f1f1f;
+  }
+  
+  /* Hover function */
+  .title-btn:hover:before, .title-btn:hover:after {
+    top: 50%;
+    opacity: 1;
+  }
+  
+  .list-group {
+    max-width: 460px;
+    margin: 1rem auto;
+  }
+  
+  .form-check-input:checked + .form-checked-content {
+    opacity: .5;
+  }
+  
+  .form-check-input-placeholder {
+    border-style: dashed;
+  }
+  [contenteditable]:focus {
+    outline: 0;
+  }
+  
+  .list-group-checkable .list-group-item {
+    cursor: pointer;
+  }
+  .list-group-item-check {
+    position: absolute;
+    clip: rect(0, 0, 0, 0);
+  }
+  .list-group-item-check:hover + .list-group-item {
+    background-color: var(--bs-light);
+  }
+  .list-group-item-check:checked + .list-group-item {
+    color: #fff;
+    background-color: var(--bs-blue);
+  }
+  .list-group-item-check[disabled] + .list-group-item,
+  .list-group-item-check:disabled + .list-group-item {
+    pointer-events: none;
+    filter: none;
+    opacity: .5;
+  }
+  
+  .list-group-radio .list-group-item {
+    cursor: pointer;
+    border-radius: .5rem;
+  }
+  .list-group-radio .form-check-input {
+    z-index: 2;
+    margin-top: -.5em;
+  }
+  .list-group-radio .list-group-item:hover,
+  .list-group-radio .list-group-item:focus {
+    background-color: var(--bs-light);
+  }
+  
+  .list-group-radio .form-check-input:checked + .list-group-item {
+    background-color: var(--bs-body);
+    border-color: var(--bs-blue);
+    box-shadow: 0 0 0 2px var(--bs-blue);
+  }
+  .list-group-radio .form-check-input[disabled] + .list-group-item,
+  .list-group-radio .form-check-input:disabled + .list-group-item {
+    pointer-events: none;
+    filter: none;
+    opacity: .5;
+  }

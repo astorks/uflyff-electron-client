@@ -1,25 +1,307 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="UTF-8" />
-    <title>Hello World!</title>
-    <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
-    <meta
-      http-equiv="Content-Security-Policy"
-      content="default-src 'self'; script-src 'self'"
-    />
-    <meta
-      http-equiv="X-Content-Security-Policy"
-      content="default-src 'self'; script-src 'self'"
-    />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
+    <link href="./styles.css" rel="stylesheet">
+    <title>FlyFF Universe</title>
   </head>
   <body>
-    <h1>Hello World!</h1>
-    We are using Node.js <span id="node-version"></span>, Chromium
-    <span id="chrome-version"></span>, and Electron
-    <span id="electron-version"></span>.
+    <div class="title-bar-wrapper">
+      <img class="title-bar-icon" src="./img/favicon.png" />
+      <div class="title-bar-title">Flyff Universe</div>
+      <div class="title-bar-menu-wrapper">
+        <button class="title-menu-btn reload-btn" onclick="window.location.reload();"><i class="bi bi-arrow-clockwise"></i></button>
+        <div class="dropdown">
+          <button class="title-menu-btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="bi bi-tools"></i>
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+            <li><a class="dropdown-item flyffipedia-btn" href="#">Flyffipedia</a></li>
+            <li><a class="dropdown-item madrigalinside-btn" href="#">Madrigalinside</a></li>
+            <li><a class="dropdown-item flyffulator-btn" href="#">Flyffulator</a></li>
+            <li><a class="dropdown-item madrigalmaps-btn" href="#">Madrigalmaps</a></li>
+            <li><a class="dropdown-item modelviewer-btn" href="#">Model Viewer</a></li>
+          </ul>
+        </div>
+        <button class="title-menu-btn new-window-btn"><i class="bi bi-window-plus"></i></button>
+        <button class="title-menu-btn home-btn disabled" disabled><i class="bi bi-house"></i></button>
+        <button class="title-menu-btn play-btn disabled" disabled><i class="bi bi-play"></i></button>
+        
+      </div>
+      <div class="title-bar-btn-wrapper">
+        <button class="title-btn fullscreen-btn" title="Fullscreen"></button>
+        <button class="title-btn min-btn" title="Minimize"></button>
+        <button class="title-btn max-btn" title="Maximize"></button>
+        <button class="title-btn close-btn" title="Close"></button>
+      </div>
+    </div>
+
+    <webview class="game-view"></webview>
+
+    <!-- Modal -->
+    <div class="modal fade" id="select-profile-modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="select-profile-modal-label" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="select-profile-modal-label">Select a Profile</h5>
+            <button type="button" class="btn btn-outline-primary" onclick="showCreateProfileDialog();">
+              <i class="bi bi-plus-circle-dotted"></i> Add a New Profile
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="template" id="select-profile-list-item-template">
+              <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
+                <img src="" alt="twbs" height="32" class="profile-icon" title="">
+                <h6 class="mb-0 profile-name"></h6>
+                <div style="flex: 1"></div>
+                <button type="button" class="btn btn-outline-danger delete-profile-btn"><i class="bi bi-trash"></i></button>
+              </a>
+            </div>
+            <div class="list-group w-auto" id="select-profile-list"></div>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="create-profile-modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="create-profile-modal-label" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="create-profile-modal-label">Add a New Profile</h5>
+          </div>
+          <div class="modal-body">
+            <h6>Choose an icon for your profile.</h6>
+            <div class="list-group list-group-checkable w-auto" style="display: block;">
+              <input class="list-group-item-check pe-none" type="radio" name="listGroupCheckableRadios" id="listGroupCheckableRadios1" value="https://flyffipedia.com/Icons/Monsters/aibatt.png" checked>
+              <label class="list-group-item rounded-3 py-3" style="display: inline-block;" for="listGroupCheckableRadios1">
+                <img height="22" src="https://flyffipedia.com/Icons/Monsters/aibatt.png" />
+              </label>
+              <input class="list-group-item-check pe-none" type="radio" name="listGroupCheckableRadios" id="listGroupCheckableRadios2" value="https://flyffipedia.com/Icons/Monsters/aibatt1.png">
+              <label class="list-group-item rounded-3 py-3" style="display: inline-block;" for="listGroupCheckableRadios2">
+                <img height="22" src="https://flyffipedia.com/Icons/Monsters/aibatt1.png" />
+              </label>
+              <input class="list-group-item-check pe-none" type="radio" name="listGroupCheckableRadios" id="listGroupCheckableRadios3" value="https://flyffipedia.com/Icons/Monsters/burudeng.png">
+              <label class="list-group-item rounded-3 py-3" style="display: inline-block;" for="listGroupCheckableRadios3">
+                <img height="22" src="https://flyffipedia.com/Icons/Monsters/burudeng.png" />
+              </label>
+              <input class="list-group-item-check pe-none" type="radio" name="listGroupCheckableRadios" id="listGroupCheckableRadios4" value="https://flyffipedia.com/Icons/Monsters/buur.png">
+              <label class="list-group-item rounded-3 py-3" style="display: inline-block;" for="listGroupCheckableRadios4">
+                <img height="22" src="https://flyffipedia.com/Icons/Monsters/buur.png" />
+              </label>
+              <input class="list-group-item-check pe-none" type="radio" name="listGroupCheckableRadios" id="listGroupCheckableRadios5" value="https://flyffipedia.com/Icons/Monsters/clockworksbutler.png">
+              <label class="list-group-item rounded-3 py-3" style="display: inline-block;" for="listGroupCheckableRadios5">
+                <img height="22" src="https://flyffipedia.com/Icons/Monsters/clockworksbutler.png" />
+              </label>
+              <input class="list-group-item-check pe-none" type="radio" name="listGroupCheckableRadios" id="listGroupCheckableRadios6" value="https://flyffipedia.com/Icons/Monsters/grayearl.png">
+              <label class="list-group-item rounded-3 py-3" style="display: inline-block;" for="listGroupCheckableRadios6">
+                <img height="22" src="https://flyffipedia.com/Icons/Monsters/grayearl.png" />
+              </label>
+              <input class="list-group-item-check pe-none" type="radio" name="listGroupCheckableRadios" id="listGroupCheckableRadios7" value="https://flyffipedia.com/Icons/Monsters/grayearl1.png">
+              <label class="list-group-item rounded-3 py-3" style="display: inline-block;" for="listGroupCheckableRadios7">
+                <img height="22" src="https://flyffipedia.com/Icons/Monsters/grayearl1.png" />
+              </label>
+              <input class="list-group-item-check pe-none" type="radio" name="listGroupCheckableRadios" id="listGroupCheckableRadios8" value="https://flyffipedia.com/Icons/Monsters/mocomochi.png">
+              <label class="list-group-item rounded-3 py-3" style="display: inline-block;" for="listGroupCheckableRadios8">
+                <img height="22" src="https://flyffipedia.com/Icons/Monsters/mocomochi.png" />
+              </label>
+              <input class="list-group-item-check pe-none" type="radio" name="listGroupCheckableRadios" id="listGroupCheckableRadios9" value="https://flyffipedia.com/Icons/Monsters/saphyryan.png">
+              <label class="list-group-item rounded-3 py-3" style="display: inline-block;" for="listGroupCheckableRadios9">
+                <img height="22" src="https://flyffipedia.com/Icons/Monsters/saphyryan.png" />
+              </label>
+              <input class="list-group-item-check pe-none" type="radio" name="listGroupCheckableRadios" id="listGroupCheckableRadios10" value="https://flyffipedia.com/Icons/Monsters/swkeakoon.png">
+              <label class="list-group-item rounded-3 py-3" style="display: inline-block;" for="listGroupCheckableRadios10">
+                <img height="22" src="https://flyffipedia.com/Icons/Monsters/swkeakoon.png" />
+              </label>
+              <input class="list-group-item-check pe-none" type="radio" name="listGroupCheckableRadios" id="listGroupCheckableRadios11" value="https://flyffipedia.com/Icons/Monsters/zombief.png">
+              <label class="list-group-item rounded-3 py-3" style="display: inline-block;" for="listGroupCheckableRadios11">
+                <img height="22" src="https://flyffipedia.com/Icons/Monsters/zombief.png" />
+              </label>
+              <input class="list-group-item-check pe-none" type="radio" name="listGroupCheckableRadios" id="listGroupCheckableRadios12" value="https://flyffipedia.com/Icons/Monsters/zombiem.png">
+              <label class="list-group-item rounded-3 py-3" style="display: inline-block;" for="listGroupCheckableRadios12">
+                <img height="22" src="https://flyffipedia.com/Icons/Monsters/zombiem.png" />
+              </label>
+            </div>
+            <div class="form-floating mb-3">
+              <input type="text" class="form-control" id="profile-name-input" placeholder="Profile Name">
+              <label for="floatingInput">Profile Name</label>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline-secondary" id="cancel-create-profile-btn">Cancel</button>
+            <button type="button" class="btn btn-outline-primary" id="save-create-profile-btn">Save</button>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <!-- You can also require other files to run in this process -->
-    <script src="./dist/renderer.js"></script>
+    <script src="./dist/renderer.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+    <script>
+      function makeid(length) {
+        var result           = '';
+        var characters       = 'abcdefghijklmnopqrstuvwxyz0123456789';
+        var charactersLength = characters.length;
+        for ( var i = 0; i < length; i++ ) {
+          result += characters.charAt(Math.floor(Math.random() * charactersLength));
+        }
+        return result;
+      }
+
+      const selectProfileDialog = new bootstrap.Modal(document.querySelector('#select-profile-modal'));
+      const createProfileDialog = new bootstrap.Modal(document.querySelector('#create-profile-modal'));
+
+      var profileList = [
+        { key: 'default', name: 'Default Profile', icon: 'https://flyffipedia.com/Icons/Monsters/aibatt.png'}
+      ];
+
+      function readProfileList() {
+        const profileListStorage = window.localStorage.getItem("profile-list");
+        if(profileListStorage) {
+          profileList = JSON.parse(profileListStorage);
+        }
+      }
+
+      function saveProfileList() {
+        window.localStorage.setItem("profile-list", JSON.stringify(profileList));
+      }
+
+      function buildProfileListHtml() {
+        const selectProfileList = document.querySelector('#select-profile-list');
+        const selectProfileListItemTemplate = document.querySelector('#select-profile-list-item-template a');
+        selectProfileList.innerHTML = '';
+
+        for(let i = 0; i < profileList.length; i++) {
+          const profile = profileList[i];
+          const profileNode = selectProfileListItemTemplate.cloneNode(true);
+          const deleteProfileBtn = profileNode.querySelector('.delete-profile-btn');
+
+          if(profileList.length <= 1) {
+            deleteProfileBtn.classList.add('hidden');
+          }
+
+          profileNode.onclick = () => game.selectProfile(profile);
+          profileNode.querySelector('.profile-name').innerText = profile.name;
+          profileNode.querySelector('.profile-icon').src = profile.icon;
+
+          deleteProfileBtn.onclick = (e) => {
+            e.stopPropagation();
+            if(confirm('Are you sure you want to delete the profile "' + profile.name + '"?')) {
+              profileList.splice(i, 1);
+              saveProfileList();
+              buildProfileListHtml();
+            }
+          }
+
+          selectProfileList.appendChild(profileNode);
+        }
+      }
+
+      function showCreateProfileDialog() {
+        selectProfileDialog.hide();
+        createProfileDialog.show();
+      }
+
+      function createProfile() {
+        const profileKey = 'profile-' + makeid(6);
+        const profileIcon = document.querySelector('[name=listGroupCheckableRadios]:checked').value;
+        const profileName = document.querySelector('#profile-name-input').value;
+
+        profileList.push({ key: profileKey, name: profileName, icon: profileIcon });
+        saveProfileList();
+        buildProfileListHtml();
+
+        createProfileDialog.hide();
+        selectProfileDialog.show();
+      }
+
+      function resetDefaultProfile() {
+        profileList = [
+          { key: 'default', name: 'Default Profile', icon: 'https://flyffipedia.com/Icons/Monsters/aibatt.png'}
+        ];
+        saveProfileList();
+        buildProfileListHtml();
+      }
+
+      readProfileList();
+      buildProfileListHtml();
+
+      document.querySelector('#cancel-create-profile-btn').addEventListener('click', () => {
+        createProfileDialog.hide();
+        selectProfileDialog.show();
+      });
+
+      document.querySelector('#save-create-profile-btn').addEventListener('click', () => createProfile());
+
+      selectProfileDialog.show();
+    </script>
+    <script>
+      const gameview = document.querySelector('.game-view');
+
+      gameview.addEventListener('console-message', (e) => {
+        if(e.level == 0) console.trace('[GAME]', e.message);
+        else if(e.level == 1) console.info('[GAME]', e.message);
+        else if(e.level == 2) console.warn('[GAME]', e.message);
+        else if(e.level == 3) console.error('[GAME]', e.message);
+      })
+
+      document.querySelector('.fullscreen-btn')?.addEventListener('click', () => window.electronAPI.windowFullscreen());
+      document.querySelector('.close-btn')?.addEventListener('click', () => window.electronAPI.windowClose());
+      document.querySelector('.min-btn')?.addEventListener('click', () => window.electronAPI.windowMinimize());
+      document.querySelector('.max-btn')?.addEventListener('click', () => console.log(window.electronAPI.windowMaximize()));
+      document.querySelector('.flyffipedia-btn')?.addEventListener('click', () => console.log(window.electronAPI.windowShowFlyffipedia()));
+      document.querySelector('.madrigalinside-btn')?.addEventListener('click', () => console.log(window.electronAPI.windowShowMadrigalinside()));
+      document.querySelector('.flyffulator-btn')?.addEventListener('click', () => console.log(window.electronAPI.windowShowFlyffulator()));
+      document.querySelector('.madrigalmaps-btn')?.addEventListener('click', () => console.log(window.electronAPI.windowShowMadrigalmaps()));
+      document.querySelector('.modelviewer-btn')?.addEventListener('click', () => console.log(window.electronAPI.windowShowModelviewer()));
+      document.querySelector('.home-btn')?.addEventListener('click', (e) => { gameview.src = 'https://universe.flyff.com/user/login'; });
+      document.querySelector('.play-btn')?.addEventListener('click', () => { gameview.src = 'https://universe.flyff.com/play'; });
+      document.querySelector('.new-window-btn')?.addEventListener('click', () => window.electronAPI.windowCreate());
+      
+    </script>
+    <script>
+      const game = {
+        selectedProfile: null,
+        sendKeypress: (keyCode, modifiers) => {
+          gameview.sendInputEvent({
+            type: "keyDown",
+            keyCode: keyCode,
+            modifiers: modifiers
+          });
+          gameview.sendInputEvent({
+            type: "char",
+            keyCode: keyCode,
+            modifiers: modifiers
+          });
+          gameview.sendInputEvent({
+            type: "keyUp",
+            keyCode: keyCode,
+            modifiers: modifiers
+          });
+        },
+        copy: () => gameview.copy(),
+        paste: () => gameview.paste(),
+        selectProfile: (profile) => {
+          if(game.selectedProfile) return;
+          gameview.partition = 'persist:' + profile.key;
+          gameview.src = 'https://universe.flyff.com/play';
+          selectProfileDialog.hide();
+          document.querySelector('.home-btn').disabled = false;
+          document.querySelector('.play-btn').disabled = false;
+          document.querySelector('.title-bar-title').innerText = 'Flyff Universe - ' + profile.name;
+          document.querySelector('title').innerText = 'Flyff Universe - ' + profile.name;
+          game.selectProfile = profile;
+        }
+      }
+
+      window.electronAPI.onGameSendKeypress((event, keyCode, modifiers) => game.sendKeypress(keyCode, modifiers));
+    </script>
   </body>
 </html>

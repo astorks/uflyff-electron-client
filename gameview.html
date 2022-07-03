@@ -1,154 +1,229 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400&display=swap" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
-    <link href="./styles.css" rel="stylesheet">
-    <title>FlyFF Universe</title>
-  </head>
-  <body class="gameview">
-    <div class="title-bar-wrapper">
-      <img class="title-bar-icon" src="./img/favicon.png" />
-      <div class="title-bar-title">Flyff Universe</div>
-      <div class="title-bar-menu-wrapper">
-        <button class="title-menu-btn reload-btn" onclick="window.location.reload();" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Force reload"><i class="bi bi-arrow-clockwise"></i></button>
-        <div class="dropdown" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Community Tools">
-          <button class="title-menu-btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-            <i class="bi bi-tools"></i>
-          </button>
-          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-            <li><a class="dropdown-item flyffipedia-btn" href="#">Flyffipedia</a></li>
-            <li><a class="dropdown-item flyffulator-btn" href="#">Flyffulator</a></li>
-            <li><a class="dropdown-item madrigalinside-btn" href="#">Madrigal Inside</a></li>
-            <li><a class="dropdown-item madrigalmaps-btn" href="#">Madrigal Maps</a></li>
-            <li><a class="dropdown-item modelviewer-btn" href="#">Model Viewer</a></li>
-          </ul>
-        </div>
-        <button class="title-menu-btn new-window-btn" data-bs-toggle="tooltip" data-bs-placement="bottom" title="New window"><i class="bi bi-window-plus"></i></button>
-        <button data-show-after="profile-select" class="title-menu-btn home-btn hidden" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Load home page"><i class="bi bi-house"></i></button>
-        <button data-show-after="profile-select" class="title-menu-btn play-btn hidden" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Load play page"><i class="bi bi-play"></i></button>
-        <button data-show-after="profile-select" class="title-menu-btn toggle-mute-btn hidden">
-          <i class="bi bi-volume-mute icon-muted" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Unmute audio"></i>
-          <i class="bi bi-volume-up icon-unmuted" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Mute aduio"></i>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
+  <link href="./styles.css" rel="stylesheet">
+  <title>FlyFF Universe</title>
+</head>
+
+<body class="gameview">
+  <div class="title-bar-wrapper">
+    <img class="title-bar-icon" src="./img/favicon.png" />
+    <div class="title-bar-title">Flyff Universe</div>
+    <div class="title-bar-menu-wrapper">
+      <button class="title-menu-btn reload-btn" onclick="window.location.reload();" data-bs-toggle="tooltip"
+        data-bs-placement="bottom" title="Force reload"><i class="bi bi-arrow-clockwise"></i></button>
+      <div class="dropdown" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Community Tools">
+        <button class="title-menu-btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown"
+          aria-expanded="false">
+          <i class="bi bi-tools"></i>
         </button>
-        <button data-show-after="profile-select" class="title-menu-btn keyboard-btn hidden" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Manage keyboard"><i class="bi bi-keyboard"></i></button>
-        
+        <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton1">
+          <li><a class="dropdown-item flyffipedia-btn" href="#">Flyffipedia</a></li>
+          <li><a class="dropdown-item flyffulator-btn" href="#">Flyffulator</a></li>
+          <li><a class="dropdown-item madrigalinside-btn" href="#">Madrigal Inside</a></li>
+          <li><a class="dropdown-item madrigalmaps-btn" href="#">Madrigal Maps</a></li>
+          <li><a class="dropdown-item modelviewer-btn" href="#">Model Viewer</a></li>
+        </ul>
       </div>
-      <div class="title-bar-btn-wrapper">
-        <button data-wnd-btn="fullscreen" class="title-btn fullscreen-btn" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Toggle fullscreen"></button>
-        <button data-wnd-btn="minimize" class="title-btn min-btn" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Minimize window"></button>
-        <button data-wnd-btn="maximize" class="title-btn max-btn" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Maximize window"></button>
-        <button data-wnd-btn="close" class="title-btn close-btn" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Close window"></button>
-      </div>
-    </div>
-
-    <webview class="game-view" allowpopups="true" useragent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36"></webview>
-
-    <!-- Modal -->
-    <div class="modal fade" id="select-profile-modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="select-profile-modal-label" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="select-profile-modal-label">Select a Profile</h5>
-            <button type="button" class="btn btn-outline-primary" onclick="showCreateProfileDialog();">
-              <i class="bi bi-plus-circle-dotted"></i> Add a New Profile
-            </button>
+      <button class="title-menu-btn new-window-btn" data-bs-toggle="tooltip" data-bs-placement="bottom"
+        title="New window"><i class="bi bi-window-plus"></i></button>
+      <button data-show-after="profile-select" class="title-menu-btn home-btn hidden" data-bs-toggle="tooltip"
+        data-bs-placement="bottom" title="Load home page"><i class="bi bi-house"></i></button>
+      <button data-show-after="profile-select" class="title-menu-btn play-btn hidden" data-bs-toggle="tooltip"
+        data-bs-placement="bottom" title="Load play page"><i class="bi bi-play"></i></button>
+      <button data-show-after="profile-select" class="title-menu-btn toggle-mute-btn hidden">
+        <i class="bi bi-volume-mute icon-muted" data-bs-toggle="tooltip" data-bs-placement="bottom"
+          title="Unmute audio"></i>
+        <i class="bi bi-volume-up icon-unmuted" data-bs-toggle="tooltip" data-bs-placement="bottom"
+          title="Mute aduio"></i>
+      </button>
+      <div class="dropdown" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Community Tools">
+        <button class="title-menu-btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <i class="bi bi-keyboard"></i>
+        </button>
+        <div class="dropdown-menu dropdown-menu-dark p-4" style="width: 439px;">
+          <div class="mb-2">
+            <button class="btn btn-outline-primary" for="btn-check" onclick="event.stopPropagation();">1</button>
+            <button class="btn btn-outline-primary" for="btn-check" onclick="event.stopPropagation();">2</button>
+            <button class="btn btn-outline-primary" for="btn-check" onclick="event.stopPropagation();">3</button>
+            <button class="btn btn-outline-primary" for="btn-check" onclick="event.stopPropagation();">4</button>
+            <button class="btn btn-primary" for="btn-check" onclick="event.stopPropagation();">5</button>
+            <button class="btn btn-outline-primary" for="btn-check" onclick="event.stopPropagation();">6</button>
+            <button class="btn btn-outline-primary" for="btn-check" onclick="event.stopPropagation();">7</button>
+            <button class="btn btn-outline-primary" for="btn-check" onclick="event.stopPropagation();">8</button>
+            <button class="btn btn-outline-primary" for="btn-check" onclick="event.stopPropagation();">9</button>
+            <button class="btn btn-outline-primary" for="btn-check" onclick="event.stopPropagation();">0</button>
           </div>
-          <div class="modal-body">
-            <div class="template" id="select-profile-list-item-template">
-              <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
-                <img src="" alt="twbs" height="32" class="profile-icon" title="">
-                <h6 class="mb-0 profile-name"></h6>
-                <div style="flex: 1"></div>
-                <button type="button" class="btn btn-outline-danger delete-profile-btn"><i class="bi bi-trash"></i></button>
-              </a>
-            </div>
-            <div class="list-group w-auto" id="select-profile-list"></div>
-            
+          <div>
+            <button class="btn btn-outline-primary" for="btn-check" onclick="event.stopPropagation();">1</button>
+            <button class="btn btn-outline-primary" for="btn-check" onclick="event.stopPropagation();">2</button>
+            <button class="btn btn-outline-primary" for="btn-check" onclick="event.stopPropagation();">3</button>
+            <button class="btn btn-outline-primary" for="btn-check" onclick="event.stopPropagation();">4</button>
+            <button class="btn btn-primary" for="btn-check" onclick="event.stopPropagation();">5</button>
+            <button class="btn btn-outline-primary" for="btn-check" onclick="event.stopPropagation();">6</button>
+            <button class="btn btn-outline-primary" for="btn-check" onclick="event.stopPropagation();">7</button>
+            <button class="btn btn-outline-primary" for="btn-check" onclick="event.stopPropagation();">8</button>
+            <button class="btn btn-outline-primary" for="btn-check" onclick="event.stopPropagation();">9</button>
+            <button class="btn btn-outline-primary" for="btn-check" onclick="event.stopPropagation();">0</button>
           </div>
         </div>
       </div>
-    </div>
 
-    <div class="modal fade" id="create-profile-modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="create-profile-modal-label" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="create-profile-modal-label">Add a New Profile</h5>
+    </div>
+    <div class="title-bar-btn-wrapper">
+      <button data-wnd-btn="fullscreen" class="title-btn fullscreen-btn" data-bs-toggle="tooltip"
+        data-bs-placement="bottom" title="Toggle fullscreen"></button>
+      <button data-wnd-btn="minimize" class="title-btn min-btn" data-bs-toggle="tooltip" data-bs-placement="bottom"
+        title="Minimize window"></button>
+      <button data-wnd-btn="maximize" class="title-btn max-btn" data-bs-toggle="tooltip" data-bs-placement="bottom"
+        title="Maximize window"></button>
+      <button data-wnd-btn="close" class="title-btn close-btn" data-bs-toggle="tooltip" data-bs-placement="bottom"
+        title="Close window"></button>
+    </div>
+  </div>
+
+  <webview class="game-view" allowpopups="true"
+    useragent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36">
+  </webview>
+
+  <!-- Modal -->
+  <div class="modal fade" id="select-profile-modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="select-profile-modal-label" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="select-profile-modal-label">Select a Profile</h5>
+          <button type="button" class="btn btn-outline-primary" onclick="showCreateProfileDialog();">
+            <i class="bi bi-plus-circle-dotted"></i> Add a New Profile
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="template" id="select-profile-list-item-template">
+            <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
+              <img src="" alt="twbs" height="32" class="profile-icon" title="">
+              <h6 class="mb-0 profile-name"></h6>
+              <div style="flex: 1"></div>
+              <button type="button" class="btn btn-outline-danger delete-profile-btn"><i
+                  class="bi bi-trash"></i></button>
+            </a>
           </div>
-          <div class="modal-body">
-            <h6>Choose an icon for your profile.</h6>
-            <div class="list-group list-group-checkable w-auto" style="display: block;">
-              <input class="list-group-item-check pe-none" type="radio" name="listGroupCheckableRadios" id="listGroupCheckableRadios1" value="https://flyffipedia.com/Icons/Monsters/aibatt.png" checked>
-              <label class="list-group-item rounded-3 py-3" style="display: inline-block;" for="listGroupCheckableRadios1">
-                <img height="22" src="https://flyffipedia.com/Icons/Monsters/aibatt.png" />
-              </label>
-              <input class="list-group-item-check pe-none" type="radio" name="listGroupCheckableRadios" id="listGroupCheckableRadios2" value="https://flyffipedia.com/Icons/Monsters/aibatt1.png">
-              <label class="list-group-item rounded-3 py-3" style="display: inline-block;" for="listGroupCheckableRadios2">
-                <img height="22" src="https://flyffipedia.com/Icons/Monsters/aibatt1.png" />
-              </label>
-              <input class="list-group-item-check pe-none" type="radio" name="listGroupCheckableRadios" id="listGroupCheckableRadios3" value="https://flyffipedia.com/Icons/Monsters/burudeng.png">
-              <label class="list-group-item rounded-3 py-3" style="display: inline-block;" for="listGroupCheckableRadios3">
-                <img height="22" src="https://flyffipedia.com/Icons/Monsters/burudeng.png" />
-              </label>
-              <input class="list-group-item-check pe-none" type="radio" name="listGroupCheckableRadios" id="listGroupCheckableRadios4" value="https://flyffipedia.com/Icons/Monsters/buur.png">
-              <label class="list-group-item rounded-3 py-3" style="display: inline-block;" for="listGroupCheckableRadios4">
-                <img height="22" src="https://flyffipedia.com/Icons/Monsters/buur.png" />
-              </label>
-              <input class="list-group-item-check pe-none" type="radio" name="listGroupCheckableRadios" id="listGroupCheckableRadios5" value="https://flyffipedia.com/Icons/Monsters/clockworksbutler.png">
-              <label class="list-group-item rounded-3 py-3" style="display: inline-block;" for="listGroupCheckableRadios5">
-                <img height="22" src="https://flyffipedia.com/Icons/Monsters/clockworksbutler.png" />
-              </label>
-              <input class="list-group-item-check pe-none" type="radio" name="listGroupCheckableRadios" id="listGroupCheckableRadios6" value="https://flyffipedia.com/Icons/Monsters/grayearl.png">
-              <label class="list-group-item rounded-3 py-3" style="display: inline-block;" for="listGroupCheckableRadios6">
-                <img height="22" src="https://flyffipedia.com/Icons/Monsters/grayearl.png" />
-              </label>
-              <input class="list-group-item-check pe-none" type="radio" name="listGroupCheckableRadios" id="listGroupCheckableRadios7" value="https://flyffipedia.com/Icons/Monsters/grayearl1.png">
-              <label class="list-group-item rounded-3 py-3" style="display: inline-block;" for="listGroupCheckableRadios7">
-                <img height="22" src="https://flyffipedia.com/Icons/Monsters/grayearl1.png" />
-              </label>
-              <input class="list-group-item-check pe-none" type="radio" name="listGroupCheckableRadios" id="listGroupCheckableRadios8" value="https://flyffipedia.com/Icons/Monsters/mocomochi.png">
-              <label class="list-group-item rounded-3 py-3" style="display: inline-block;" for="listGroupCheckableRadios8">
-                <img height="22" src="https://flyffipedia.com/Icons/Monsters/mocomochi.png" />
-              </label>
-              <input class="list-group-item-check pe-none" type="radio" name="listGroupCheckableRadios" id="listGroupCheckableRadios9" value="https://flyffipedia.com/Icons/Monsters/saphyryan.png">
-              <label class="list-group-item rounded-3 py-3" style="display: inline-block;" for="listGroupCheckableRadios9">
-                <img height="22" src="https://flyffipedia.com/Icons/Monsters/saphyryan.png" />
-              </label>
-              <input class="list-group-item-check pe-none" type="radio" name="listGroupCheckableRadios" id="listGroupCheckableRadios10" value="https://flyffipedia.com/Icons/Monsters/swkeakoon.png">
-              <label class="list-group-item rounded-3 py-3" style="display: inline-block;" for="listGroupCheckableRadios10">
-                <img height="22" src="https://flyffipedia.com/Icons/Monsters/swkeakoon.png" />
-              </label>
-              <input class="list-group-item-check pe-none" type="radio" name="listGroupCheckableRadios" id="listGroupCheckableRadios11" value="https://flyffipedia.com/Icons/Monsters/zombief.png">
-              <label class="list-group-item rounded-3 py-3" style="display: inline-block;" for="listGroupCheckableRadios11">
-                <img height="22" src="https://flyffipedia.com/Icons/Monsters/zombief.png" />
-              </label>
-              <input class="list-group-item-check pe-none" type="radio" name="listGroupCheckableRadios" id="listGroupCheckableRadios12" value="https://flyffipedia.com/Icons/Monsters/zombiem.png">
-              <label class="list-group-item rounded-3 py-3" style="display: inline-block;" for="listGroupCheckableRadios12">
-                <img height="22" src="https://flyffipedia.com/Icons/Monsters/zombiem.png" />
-              </label>
-            </div>
-            <div class="form-floating mb-3">
-              <input type="text" class="form-control" id="profile-name-input" placeholder="Profile Name">
-              <label for="floatingInput">Profile Name</label>
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-outline-secondary" id="cancel-create-profile-btn">Cancel</button>
-            <button type="button" class="btn btn-outline-primary" id="save-create-profile-btn">Save</button>
-          </div>
+          <div class="list-group w-auto" id="select-profile-list"></div>
+
         </div>
       </div>
     </div>
+  </div>
 
-    <!-- You can also require other files to run in this process -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-    <script src="./dist/global.js" defer></script>
-    <script src="./dist/gameview.js" defer></script>
-  </body>
+  <div class="modal fade" id="create-profile-modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="create-profile-modal-label" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="create-profile-modal-label">Add a New Profile</h5>
+        </div>
+        <div class="modal-body">
+          <h6>Choose an icon for your profile.</h6>
+          <div class="list-group list-group-checkable w-auto" style="display: block;">
+            <input class="list-group-item-check pe-none" type="radio" name="listGroupCheckableRadios"
+              id="listGroupCheckableRadios1" value="https://flyffipedia.com/Icons/Monsters/aibatt.png" checked>
+            <label class="list-group-item rounded-3 py-3" style="display: inline-block;"
+              for="listGroupCheckableRadios1">
+              <img height="22" src="https://flyffipedia.com/Icons/Monsters/aibatt.png" />
+            </label>
+            <input class="list-group-item-check pe-none" type="radio" name="listGroupCheckableRadios"
+              id="listGroupCheckableRadios2" value="https://flyffipedia.com/Icons/Monsters/aibatt1.png">
+            <label class="list-group-item rounded-3 py-3" style="display: inline-block;"
+              for="listGroupCheckableRadios2">
+              <img height="22" src="https://flyffipedia.com/Icons/Monsters/aibatt1.png" />
+            </label>
+            <input class="list-group-item-check pe-none" type="radio" name="listGroupCheckableRadios"
+              id="listGroupCheckableRadios3" value="https://flyffipedia.com/Icons/Monsters/burudeng.png">
+            <label class="list-group-item rounded-3 py-3" style="display: inline-block;"
+              for="listGroupCheckableRadios3">
+              <img height="22" src="https://flyffipedia.com/Icons/Monsters/burudeng.png" />
+            </label>
+            <input class="list-group-item-check pe-none" type="radio" name="listGroupCheckableRadios"
+              id="listGroupCheckableRadios4" value="https://flyffipedia.com/Icons/Monsters/buur.png">
+            <label class="list-group-item rounded-3 py-3" style="display: inline-block;"
+              for="listGroupCheckableRadios4">
+              <img height="22" src="https://flyffipedia.com/Icons/Monsters/buur.png" />
+            </label>
+            <input class="list-group-item-check pe-none" type="radio" name="listGroupCheckableRadios"
+              id="listGroupCheckableRadios5" value="https://flyffipedia.com/Icons/Monsters/clockworksbutler.png">
+            <label class="list-group-item rounded-3 py-3" style="display: inline-block;"
+              for="listGroupCheckableRadios5">
+              <img height="22" src="https://flyffipedia.com/Icons/Monsters/clockworksbutler.png" />
+            </label>
+            <input class="list-group-item-check pe-none" type="radio" name="listGroupCheckableRadios"
+              id="listGroupCheckableRadios6" value="https://flyffipedia.com/Icons/Monsters/grayearl.png">
+            <label class="list-group-item rounded-3 py-3" style="display: inline-block;"
+              for="listGroupCheckableRadios6">
+              <img height="22" src="https://flyffipedia.com/Icons/Monsters/grayearl.png" />
+            </label>
+            <input class="list-group-item-check pe-none" type="radio" name="listGroupCheckableRadios"
+              id="listGroupCheckableRadios7" value="https://flyffipedia.com/Icons/Monsters/grayearl1.png">
+            <label class="list-group-item rounded-3 py-3" style="display: inline-block;"
+              for="listGroupCheckableRadios7">
+              <img height="22" src="https://flyffipedia.com/Icons/Monsters/grayearl1.png" />
+            </label>
+            <input class="list-group-item-check pe-none" type="radio" name="listGroupCheckableRadios"
+              id="listGroupCheckableRadios8" value="https://flyffipedia.com/Icons/Monsters/mocomochi.png">
+            <label class="list-group-item rounded-3 py-3" style="display: inline-block;"
+              for="listGroupCheckableRadios8">
+              <img height="22" src="https://flyffipedia.com/Icons/Monsters/mocomochi.png" />
+            </label>
+            <input class="list-group-item-check pe-none" type="radio" name="listGroupCheckableRadios"
+              id="listGroupCheckableRadios9" value="https://flyffipedia.com/Icons/Monsters/saphyryan.png">
+            <label class="list-group-item rounded-3 py-3" style="display: inline-block;"
+              for="listGroupCheckableRadios9">
+              <img height="22" src="https://flyffipedia.com/Icons/Monsters/saphyryan.png" />
+            </label>
+            <input class="list-group-item-check pe-none" type="radio" name="listGroupCheckableRadios"
+              id="listGroupCheckableRadios10" value="https://flyffipedia.com/Icons/Monsters/swkeakoon.png">
+            <label class="list-group-item rounded-3 py-3" style="display: inline-block;"
+              for="listGroupCheckableRadios10">
+              <img height="22" src="https://flyffipedia.com/Icons/Monsters/swkeakoon.png" />
+            </label>
+            <input class="list-group-item-check pe-none" type="radio" name="listGroupCheckableRadios"
+              id="listGroupCheckableRadios11" value="https://flyffipedia.com/Icons/Monsters/zombief.png">
+            <label class="list-group-item rounded-3 py-3" style="display: inline-block;"
+              for="listGroupCheckableRadios11">
+              <img height="22" src="https://flyffipedia.com/Icons/Monsters/zombief.png" />
+            </label>
+            <input class="list-group-item-check pe-none" type="radio" name="listGroupCheckableRadios"
+              id="listGroupCheckableRadios12" value="https://flyffipedia.com/Icons/Monsters/zombiem.png">
+            <label class="list-group-item rounded-3 py-3" style="display: inline-block;"
+              for="listGroupCheckableRadios12">
+              <img height="22" src="https://flyffipedia.com/Icons/Monsters/zombiem.png" />
+            </label>
+          </div>
+          <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="profile-name-input" placeholder="Profile Name">
+            <label for="floatingInput">Profile Name</label>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-secondary" id="cancel-create-profile-btn">Cancel</button>
+          <button type="button" class="btn btn-outline-primary" id="save-create-profile-btn">Save</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- You can also require other files to run in this process -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+    crossorigin="anonymous"></script>
+  <script src="./dist/global.js" defer></script>
+  <script src="./dist/gameview.js" defer></script>
+</body>
+
 </html>

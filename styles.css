@@ -8,6 +8,7 @@ body {
   width: 100vw;
   height: 100vh;
   user-select: none;
+  font-family: 'Open Sans', sans-serif;
 }
 
 body.gameview {
@@ -103,7 +104,7 @@ body.gameview {
 
   .title-bar-title {
     color: #ffffff;
-    font-family: 'Open Sans', sans-serif;
+    
     font-size: 13px;
   }
 

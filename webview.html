@@ -9,16 +9,20 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
     <link href="./styles.css" rel="stylesheet">
-    <title>Madrigal Inside</title>
+    <title>Web View</title>
   </head>
   <body>
     <div class="title-bar-wrapper">
-      <img class="title-bar-icon" src="./img/favicon-madrigalinside.png" />
-      <div class="title-bar-title">Madrigal Inside</div>
+      <img class="title-bar-icon" src="./img/favicon.png" />
+      <div class="title-bar-title">Web View</div>
       <div class="title-bar-menu-wrapper">
         <button class="title-menu-btn browse-reload-btn"><i class="bi bi-arrow-clockwise"></i></button>
         <button class="title-menu-btn browse-back-btn"><i class="bi bi-arrow-left-short"></i></button>
         <button class="title-menu-btn browse-forward-btn"><i class="bi bi-arrow-right-short"></i></button>
+        <button class="title-menu-btn toggle-pin-btn">
+          <i class="bi bi-pin-angle icon-unpined"></i>
+          <i class="bi bi-pin-fill icon-pined"></i>
+        </button>
       </div>
       <div class="title-bar-btn-wrapper">
         <button class="title-btn min-btn" title="Minimize"></button>
@@ -27,23 +31,9 @@
       </div>
     </div>
 
-    <webview id="web-view" src="https://madrigalinside.com" partition="persist:webview"></webview>
+    <webview id="web-view" allowpopups="true" useragent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36" partition="persist:webview"></webview>
 
-    <script>
-      const webview = document.querySelector('#web-view');
-
-      webview.addEventListener('load-commit', () => {
-        document.querySelector('.browse-back-btn').disabled = !webview.canGoBack();
-        document.querySelector('.browse-forward-btn').disabled = !webview.canGoForward();
-      });
-
-      document.querySelector('.close-btn')?.addEventListener('click', () => window.electronAPI.windowClose());
-      document.querySelector('.min-btn')?.addEventListener('click', () => window.electronAPI.windowMinimize());
-      document.querySelector('.max-btn')?.addEventListener('click', () => window.electronAPI.windowMaximize());
-      document.querySelector('.browse-back-btn')?.addEventListener('click', () => webview.goBack());
-      document.querySelector('.browse-forward-btn')?.addEventListener('click', () => webview.goForward());
-      document.querySelector('.browse-reload-btn')?.addEventListener('click', () => webview.reload());
-
-    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+    <script src="./dist/webview.js" defer></script>
   </body>
 </html>

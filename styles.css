@@ -66,6 +66,22 @@ body.gameview {
   display: none;
 }
 
+.toggle-pin-btn .icon-pined {
+  display: none;
+}
+
+.toggle-pin-btn .icon-unpined {
+  display: initial;
+}
+
+.toggle-pin-btn.pined .icon-pined {
+  display: initial;
+}
+
+.toggle-pin-btn.pined .icon-unpined {
+  display: none;
+}
+
 .title-bar-wrapper {
     height: 32px;
     width: 100vw;

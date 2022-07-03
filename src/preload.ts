@@ -14,19 +14,21 @@ window.addEventListener("DOMContentLoaded", () => {
 });
 
 contextBridge.exposeInMainWorld('electronAPI', {
-  onGameSendKeypress: (callback: any) => ipcRenderer.on('game-sendKeypress', callback),
-  onGameCopy: (callback: any) => ipcRenderer.on('game-copy', callback),
-  onGamePaste: (callback: any) => ipcRenderer.on('game-paste', callback),
-  onGameLogin: (callback: any) => ipcRenderer.on('game-login', callback),
+  window: {
+    close: () => ipcRenderer.send('window:close'),
+    minimize: () => ipcRenderer.send('window:minimize'),
+    maximize: () => ipcRenderer.send('window:maximize'),
+    fullscreen: () => ipcRenderer.send('window:fullscreen'),
+    setAlwaysOnTop: (flag: boolean, level = 10) => ipcRenderer.invoke('window:setAlwaysOnTop', flag, level),
 
-  windowClose: () => ipcRenderer.send('window-close'),
-  windowMinimize: () => ipcRenderer.send('window-minimize'),
-  windowMaximize: () => ipcRenderer.send('window-maximize'),
-  windowFullscreen: () => ipcRenderer.send('window-fullscreen'),
-  windowShowFlyffipedia: () => ipcRenderer.send('window-show-flyffipedia'),
-  windowShowMadrigalinside: () => ipcRenderer.send('window-show-madrigalinside'),
-  windowShowFlyffulator: () => ipcRenderer.send('window-show-flyffulator'),
-  windowShowMadrigalmaps: () => ipcRenderer.send('window-show-madrigalmaps'),
-  windowShowModelviewer: () => ipcRenderer.send('window-show-modelviewer'),
-  windowCreate: () => ipcRenderer.send('window-create'),
-})
+    createWebView: (url: string) => ipcRenderer.send('window:createWebView', url),
+    createGameView: () => ipcRenderer.send('window:createGameView'),
+  },
+  game: {
+    onSendKeypress: (callback: (event: any, keyCode: string, modifiers: any) => void) => ipcRenderer.on('game:sendKeypress', callback),
+    onCopy: (callback: any) => ipcRenderer.on('game:copy', callback),
+    onPaste: (callback: any) => ipcRenderer.on('game:paste', callback),
+  },
+});
+
+// window.electronAPI.onGameSendKeypress((event, keyCode, modifiers) => game.sendKeypress(keyCode, modifiers));

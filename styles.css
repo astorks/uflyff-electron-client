@@ -16,10 +16,6 @@ body.gameview {
   background-repeat: no-repeat;
 }
 
-.hidden, .template {
-  display: none;
-}
-
 .profile-select a {
   cursor: pointer;
 }
@@ -274,4 +270,8 @@ body.gameview {
     pointer-events: none;
     filter: none;
     opacity: .5;
+  }
+
+  .hidden, .template {
+    display: none;
   }

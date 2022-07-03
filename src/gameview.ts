@@ -1,26 +1,14 @@
 /// <amd-module name="bootstrap"/>
 
-declare interface Window {
-    electronAPI: ElectronApiInterface;
-}
+const gameview: any = document.querySelector('.game-view');
+let game: Game = null;
 
-declare interface ElectronApiInterface {
-    window: {
-        close(): void,
-        minimize(): void,
-        maximize(): void,
-        fullscreen(): void,
-        setAlwaysOnTop(flag: boolean, level: number): boolean
-        createWebView(url: string): void,
-        createGameView():void
-    },
+const selectProfileDialog = new bootstrap.Modal(document.querySelector('#select-profile-modal'));
+const createProfileDialog = new bootstrap.Modal(document.querySelector('#create-profile-modal'));
 
-    game: {
-        onSendKeypress(callback: (event: any, keyCode: string, modifiers: any) => void): void,
-        onCopy(callback: (event: any) => void): void,
-        onPaste(callback: (event: any) => void): void,
-    }
-}
+let profileList: Array<GameProfile> = [
+    { key: 'default', name: 'Default Profile', icon: 'https://flyffipedia.com/Icons/Monsters/aibatt.png'}
+];
 
 function makeid(length: number): string {
     let result           = '';
@@ -31,15 +19,6 @@ function makeid(length: number): string {
     }
     return result;
 }
-
-const gameview: any = document.querySelector('.game-view');
-let game: Game = null;
-const selectProfileDialog = new bootstrap.Modal(document.querySelector('#select-profile-modal'));
-const createProfileDialog = new bootstrap.Modal(document.querySelector('#create-profile-modal'));
-
-let profileList: Array<GameProfile> = [
-    { key: 'default', name: 'Default Profile', icon: 'https://flyffipedia.com/Icons/Monsters/aibatt.png'}
-];
 
 function readProfileList() {
     const profileListStorage = window.localStorage.getItem("profile-list");
@@ -127,11 +106,10 @@ class Game {
         gameview.partition = 'persist:' + selectedProfile.key;
         gameview.src = 'https://universe.flyff.com/play';
         selectProfileDialog.hide();
-        document.querySelector<HTMLButtonElement>('.home-btn').disabled = false;
-        document.querySelector<HTMLButtonElement>('.play-btn').disabled = false;
-        document.querySelector<HTMLButtonElement>('.toggle-mute-btn').disabled = false;
         document.querySelector<HTMLElement>('.title-bar-title').innerText = 'Flyff Universe - ' + selectedProfile.name;
         document.querySelector<HTMLElement>('title').innerText = 'Flyff Universe - ' + selectedProfile.name;
+
+        document.querySelectorAll('[data-show-after="profile-select"]').forEach((e: HTMLElement) => e.classList.remove('hidden'));
     }
 
     public sendKeypress(keyCode: string, modifiers: any): void {
@@ -168,6 +146,10 @@ class Game {
             document.querySelector('.toggle-mute-btn').classList.remove('muted');
         }
     }
+
+    public navigate(url: string): void {
+        gameview.src = url;
+    }
 }
 
 gameview.addEventListener('console-message', (e: any) => {
@@ -177,12 +159,9 @@ gameview.addEventListener('console-message', (e: any) => {
     else if(e.level == 3) console.error('[GAME]', e.message);
 });
 
-document.querySelector('.fullscreen-btn')?.addEventListener('click', () => window.electronAPI.window.fullscreen());
-document.querySelector('.close-btn')?.addEventListener('click', () => window.electronAPI.window.close());
-document.querySelector('.min-btn')?.addEventListener('click', () => window.electronAPI.window.minimize());
-document.querySelector('.max-btn')?.addEventListener('click', () => console.log(window.electronAPI.window.maximize()));
-document.querySelector('.home-btn')?.addEventListener('click', (e) => { gameview.src = 'https://universe.flyff.com/user/login'; });
-document.querySelector('.play-btn')?.addEventListener('click', () => { gameview.src = 'https://universe.flyff.com/play'; });
+
+document.querySelector('.home-btn')?.addEventListener('click', () => game.navigate('https://universe.flyff.com/user/login'));
+document.querySelector('.play-btn')?.addEventListener('click', () => game.navigate('https://universe.flyff.com/play'));
 document.querySelector('.toggle-mute-btn')?.addEventListener('click', () => game.toggleAudioMute());
 document.querySelector('.new-window-btn')?.addEventListener('click', () => window.electronAPI.window.createGameView());
 document.querySelector('.flyffipedia-btn')?.addEventListener('click', () => console.log(window.electronAPI.window.createWebView('https://flyffipedia.com/')));

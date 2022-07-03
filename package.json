@@ -35,37 +35,10 @@
     "bootstrap": "^5.2.0-beta1",
     "bootstrap-icons": "^1.8.3",
     "custom-electron-titlebar": "^4.1.0",
+    "electron-settings": "^4.0.2",
     "electron-squirrel-startup": "^1.0.0"
   },
   "config": {
-    "forge": {
-      "packagerConfig": {
-        "icon": "./img/app-icon",
-        "executableName": "Flyff Universe",
-        "asar": true
-      },
-      "makers": [
-        {
-          "name": "@electron-forge/maker-squirrel",
-          "config": {
-            "name": "flyffu_electron_client"
-          }
-        },
-        {
-          "name": "@electron-forge/maker-zip",
-          "platforms": [
-            "darwin"
-          ]
-        },
-        {
-          "name": "@electron-forge/maker-deb",
-          "config": {}
-        },
-        {
-          "name": "@electron-forge/maker-rpm",
-          "config": {}
-        }
-      ]
-    }
+    "forge": "./forge.config.js"
   }
 }

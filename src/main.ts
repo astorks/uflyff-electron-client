@@ -1,13 +1,20 @@
 import { app, BrowserWindow, ipcMain, globalShortcut } from "electron";
+import { windowStateKeeper, WindowStateKeeper } from './util/windowStateKeeper';
 import * as path from "path";
+
+let gameviewWindowStateKeeper: WindowStateKeeper;
 
 function createGameView() {
     const wnd = new BrowserWindow({
-        width: 1280,
-        height: 720,
+        x: gameviewWindowStateKeeper.x,
+        y: gameviewWindowStateKeeper.y,
+        width: gameviewWindowStateKeeper.width,
+        height: gameviewWindowStateKeeper.height,
+        fullscreen: gameviewWindowStateKeeper.isFullscreen,
+        minWidth: 410,
+        minHeight: 300,
         icon: path.join(__dirname, "../img/favicon.png"),
         titleBarStyle: "hidden",
-
         webPreferences: {
             preload: path.join(__dirname, "preload.js"),
             webviewTag: true,
@@ -19,7 +26,7 @@ function createGameView() {
     }
 
     wnd.loadFile(path.join(__dirname, "../gameview.html"));
-    // wnd.webContents.openDevTools();
+
     return wnd;
 }
 
@@ -85,19 +92,11 @@ ipcMain.handle("window:setAlwaysOnTop", (event, flag, level: 10) => {
 
 ipcMain.on("window:createWebView", (ev, url: string) => createWebView(url));
 ipcMain.on("window:createGameView", () => createGameView());
-
-app.on("ready", () => {
-    createGameView();
-
-    // globalShortcut.register('CommandOrControl+1', () => mainWindow.webContents.send("game-sendKeypress", "1"));
-    // globalShortcut.register('CommandOrControl+2', () => mainWindow.webContents.send("game-sendKeypress", "2"));
-    // globalShortcut.register('CommandOrControl+3', () => mainWindow.webContents.send("game-sendKeypress", "3"));
-    // globalShortcut.register('CommandOrControl+4', () => mainWindow.webContents.send("game-sendKeypress", "4"));
-    // globalShortcut.register('CommandOrControl+5', () => mainWindow.webContents.send("game-sendKeypress", "5"));
-    // globalShortcut.register('CommandOrControl+6', () => mainWindow.webContents.send("game-sendKeypress", "6"));
-    // globalShortcut.register('CommandOrControl+7', () => mainWindow.webContents.send("game-sendKeypress", "7"));
-    // globalShortcut.register('CommandOrControl+8', () => mainWindow.webContents.send("game-sendKeypress", "8"));
-    // globalShortcut.register('CommandOrControl+9', () => mainWindow.webContents.send("game-sendKeypress", "9"));
-    // globalShortcut.register('CommandOrControl+0', () => mainWindow.webContents.send("game-sendKeypress", "0"));
-});
 app.on("window-all-closed", () => app.quit());
+
+
+(async function startup() {
+    gameviewWindowStateKeeper = await windowStateKeeper('main');
+    await app.whenReady();
+    createGameView();
+})();

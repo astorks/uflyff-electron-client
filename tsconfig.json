@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
-    "module": "commonjs",
+    "esModuleInterop": true,
+    "module": "Node16",
     "noImplicitAny": true,
     "sourceMap": true,
     "outDir": "dist",

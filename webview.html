@@ -16,24 +16,25 @@
       <img class="title-bar-icon" src="./img/favicon.png" />
       <div class="title-bar-title">Web View</div>
       <div class="title-bar-menu-wrapper">
-        <button class="title-menu-btn browse-reload-btn"><i class="bi bi-arrow-clockwise"></i></button>
-        <button class="title-menu-btn browse-back-btn"><i class="bi bi-arrow-left-short"></i></button>
-        <button class="title-menu-btn browse-forward-btn"><i class="bi bi-arrow-right-short"></i></button>
+        <button class="title-menu-btn browse-reload-btn" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Navigation reload"><i class="bi bi-arrow-clockwise"></i></button>
+        <button class="title-menu-btn browse-back-btn" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Navigation back"><i class="bi bi-arrow-left-short"></i></button>
+        <button class="title-menu-btn browse-forward-btn" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Navigation forward"><i class="bi bi-arrow-right-short"></i></button>
         <button class="title-menu-btn toggle-pin-btn">
-          <i class="bi bi-pin-angle icon-unpined"></i>
-          <i class="bi bi-pin-fill icon-pined"></i>
+          <i class="bi bi-pin-angle icon-unpined" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Pin window"></i>
+          <i class="bi bi-pin-fill icon-pined" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Unpin window"></i>
         </button>
       </div>
       <div class="title-bar-btn-wrapper">
-        <button class="title-btn min-btn" title="Minimize"></button>
-        <button class="title-btn max-btn" title="Maximize"></button>
-        <button class="title-btn close-btn" title="Close"></button>
+        <button data-wnd-btn="minimize" class="title-btn min-btn" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Minimize window"></button>
+        <button data-wnd-btn="maximize" class="title-btn max-btn" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Maximize window"></button>
+        <button data-wnd-btn="close" class="title-btn close-btn" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Close window"></button>
       </div>
     </div>
 
     <webview id="web-view" allowpopups="true" useragent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36" partition="persist:webview"></webview>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+    <script src="./dist/global.js" defer></script>
     <script src="./dist/webview.js" defer></script>
   </body>
 </html>

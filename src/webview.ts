@@ -1,27 +1,5 @@
 /// <amd-module name="bootstrap"/>
 
-declare interface Window {
-    electronAPI: ElectronApiInterface;
-}
-
-declare interface ElectronApiInterface {
-    window: {
-        close(): void,
-        minimize(): void,
-        maximize(): void,
-        fullscreen(): void,
-        setAlwaysOnTop(flag: boolean, level: number): boolean
-        createWebView(url: string): void,
-        createGameView():void
-    },
-
-    game: {
-        onSendKeypress(callback: (event: any, keyCode: string, modifiers: any) => void): void,
-        onCopy(callback: (event: any) => void): void,
-        onPaste(callback: (event: any) => void): void,
-    }
-}
-
 let windowIsPinned = false;
 const webview: any = document.querySelector('#web-view');
 webview.src = window.location.hash.substring(1);
@@ -44,9 +22,6 @@ webview.addEventListener('page-favicon-updated', (e: { favicons: Array<string> }
     }
 });
 
-document.querySelector('.close-btn')?.addEventListener('click', () => window.electronAPI.window.close());
-document.querySelector('.min-btn')?.addEventListener('click', () => window.electronAPI.window.minimize());
-document.querySelector('.max-btn')?.addEventListener('click', () => window.electronAPI.window.maximize());
 document.querySelector('.browse-back-btn')?.addEventListener('click', () => webview.goBack());
 document.querySelector('.browse-forward-btn')?.addEventListener('click', () => webview.goForward());
 document.querySelector('.browse-reload-btn')?.addEventListener('click', () => webview.reload());

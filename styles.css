@@ -80,20 +80,31 @@ body.gameview {
 }
 
 .title-bar-wrapper {
-    height: 32px;
-    width: 100vw;
-    display: flex;
-    align-items: center;
-    position: fixed;
-    padding: 0px;
-    top: 0;
-    -webkit-app-region: drag;
-    background: #1f1f1f;
-    z-index: 999999;
-  }
+  height: 32px;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  position: fixed;
+  padding: 0px;
+  top: 0;
+  -webkit-app-region: drag;
+  background: #1f1f1f;
+  z-index: 999999;
+  transition: background-color 250ms linear;
+}
+
+.title-bar-light,
+.title-bar-dark .title-menu-btn {
+  color: #1f1f1f;
+}
+
+.title-bar-dark,
+.title-bar-dark .title-menu-btn {
+  color: #ffffff;
+}
 
   .title-bar-menu-wrapper {
-    flex-grow: 1;
+    
     padding: 0 6px;
   }
 
@@ -103,9 +114,9 @@ body.gameview {
   }
 
   .title-bar-title {
-    color: #ffffff;
-    
     font-size: 13px;
+    flex-grow: 1;
+    text-align: center;
   }
 
   .title-bar-icon {
@@ -127,7 +138,6 @@ body.gameview {
     padding: 0 3px;
     background: none;
     border: none;
-    color: #ffffff;
     height: 32px;
     font-size: 19px;
     padding-top: 3px;
@@ -140,7 +150,6 @@ body.gameview {
     padding: 0 3px;
     background: none;
     border: none;
-    color: #ffffff;
     font-size: 12px;
   }
 

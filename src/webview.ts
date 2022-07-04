@@ -4,9 +4,13 @@ let windowIsPinned = false;
 const webview: any = document.querySelector('#web-view');
 webview.src = window.location.hash.substring(1);
 
-webview.addEventListener('load-commit', () => {
+webview.addEventListener('load-commit', (ev: { url: string, isMainFrame: boolean }) => {
     document.querySelector<HTMLButtonElement>('.browse-back-btn').disabled = !webview.canGoBack();
     document.querySelector<HTMLButtonElement>('.browse-forward-btn').disabled = !webview.canGoForward();
+});
+
+webview.addEventListener('did-change-theme-color', (ev: { themeColor: string }) => {
+    setTitleColor(ev.themeColor ? ev.themeColor : '#1f1f1f');
 });
 
 webview.addEventListener('page-title-updated', (e: { title: string }) => {
@@ -28,7 +32,7 @@ document.querySelector('.browse-reload-btn')?.addEventListener('click', () => we
 
 document.querySelector('.toggle-pin-btn')?.addEventListener('click', () => {
     windowIsPinned = !windowIsPinned;
-    window.electronAPI.window.setAlwaysOnTop(windowIsPinned, 10);
+    electronAPI.window.setAlwaysOnTop(windowIsPinned, 10);
     if(windowIsPinned) {
         document.querySelector('.toggle-pin-btn').classList.add('pined');
     } else {

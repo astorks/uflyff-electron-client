@@ -15,9 +15,8 @@
 </head>
 
 <body class="gameview">
-  <div class="title-bar-wrapper">
+  <div class="title-bar-wrapper title-bar-dark">
     <img class="title-bar-icon" src="./img/favicon.png" />
-    <div class="title-bar-title">Flyff Universe</div>
     <div class="title-bar-menu-wrapper">
       <button class="title-menu-btn reload-btn" onclick="window.location.reload();" data-bs-toggle="tooltip"
         data-bs-placement="bottom" title="Force reload"><i class="bi bi-arrow-clockwise"></i></button>
@@ -27,11 +26,13 @@
           <i class="bi bi-tools"></i>
         </button>
         <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton1">
-          <li><a class="dropdown-item flyffipedia-btn" href="#">Flyffipedia</a></li>
-          <li><a class="dropdown-item flyffulator-btn" href="#">Flyffulator</a></li>
-          <li><a class="dropdown-item madrigalinside-btn" href="#">Madrigal Inside</a></li>
-          <li><a class="dropdown-item madrigalmaps-btn" href="#">Madrigal Maps</a></li>
-          <li><a class="dropdown-item modelviewer-btn" href="#">Model Viewer</a></li>
+          <li><a data-linktype="webview" class="dropdown-item" href="https://google.com">Google</a></li>
+          <li><a data-linktype="webview" class="dropdown-item" href="https://flyffipedia.com/">Flyffipedia</a></li>
+          <li><a data-linktype="webview" class="dropdown-item" href="https://flyffulator.com/">Flyffulator</a></li>
+          <li><a data-linktype="webview" class="dropdown-item" href="https://madrigalinside.com/">Madrigal Inside</a></li>
+          <li><a data-linktype="webview" class="dropdown-item" href="https://www.madrigalmaps.com/">Madrigal Maps</a></li>
+          <li><a data-linktype="webview" class="dropdown-item" href="https://flyffmodelviewer.com/">Model Viewer</a></li>
+          <li><a data-linktype="webview" class="dropdown-item" href="https://skillulator.com/">Skillulator</a></li>
         </ul>
       </div>
       <button class="title-menu-btn new-window-btn" data-bs-toggle="tooltip" data-bs-placement="bottom"
@@ -46,7 +47,7 @@
         <i class="bi bi-volume-up icon-unmuted" data-bs-toggle="tooltip" data-bs-placement="bottom"
           title="Mute aduio"></i>
       </button>
-      <div class="dropdown" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Community Tools">
+      <!-- <div class="dropdown" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Passthrough keybinds">
         <button class="title-menu-btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
           <i class="bi bi-keyboard"></i>
         </button>
@@ -79,9 +80,10 @@
             <button class="btn btn-outline-primary" for="btn-check" onclick="event.stopPropagation();">Alt+0</button>
           </div>
         </div>
-      </div>
+      </div> -->
 
     </div>
+    <div class="title-bar-title">Flyff Universe</div>
     <div class="title-bar-btn-wrapper">
       <button data-wnd-btn="fullscreen" class="title-btn fullscreen-btn" data-bs-toggle="tooltip"
         data-bs-placement="bottom" title="Toggle fullscreen"></button>
@@ -213,6 +215,8 @@
             <input type="text" class="form-control" id="profile-name-input" placeholder="Profile Name">
             <label for="floatingInput">Profile Name</label>
           </div>
+          <h6>Choose a color for your profile.</h6>
+          <input type="color" class="form-control form-control-color" id="profile-color-input" value="#1f1f1f" title="Choose a color for your profile.">
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-outline-secondary" id="cancel-create-profile-btn">Cancel</button>

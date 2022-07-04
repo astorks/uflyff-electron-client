@@ -1,5 +1,7 @@
 /// <amd-module name="bootstrap"/>
 
+declare const setTitleColor: (hexColor: string) => void;
+
 const gameview: any = document.querySelector('.game-view');
 let game: Game = null;
 
@@ -7,7 +9,7 @@ const selectProfileDialog = new bootstrap.Modal(document.querySelector('#select-
 const createProfileDialog = new bootstrap.Modal(document.querySelector('#create-profile-modal'));
 
 let profileList: Array<GameProfile> = [
-    { key: 'default', name: 'Default Profile', icon: 'https://flyffipedia.com/Icons/Monsters/aibatt.png'}
+    { key: 'default', name: 'Default Profile', icon: 'https://flyffipedia.com/Icons/Monsters/aibatt.png' }
 ];
 
 function makeid(length: number): string {
@@ -41,13 +43,16 @@ function buildProfileListHtml() {
         const profileNode = selectProfileListItemTemplate.cloneNode(true) as HTMLAnchorElement;
         const deleteProfileBtn = profileNode.querySelector<HTMLButtonElement>('.delete-profile-btn');
 
+        profileNode.style.borderColor = profile.color ? profile.color : '#1f1f1f';
+
         if(profileList.length <= 1) {
-        deleteProfileBtn.classList.add('hidden');
+            deleteProfileBtn.classList.add('hidden');
         }
 
         profileNode.onclick = () => {
             game = new Game(profile);
         };
+
         profileNode.querySelector<HTMLElement>('.profile-name').innerText = profile.name;
         profileNode.querySelector<HTMLImageElement>('.profile-icon').src = profile.icon;
 
@@ -78,8 +83,14 @@ function createProfile() {
     const profileKey = 'profile-' + makeid(6);
     const profileIcon = document.querySelector<HTMLInputElement>('[name=listGroupCheckableRadios]:checked').value;
     const profileName = document.querySelector<HTMLInputElement>('#profile-name-input').value;
+    const profileColor = document.querySelector<HTMLInputElement>('#profile-color-input').value;
 
-    profileList.push({ key: profileKey, name: profileName, icon: profileIcon });
+    if(profileName.trim() == '') {
+        alert('You must choose a name for your profile.');
+        return;
+    }
+
+    profileList.push({ key: profileKey, name: profileName, icon: profileIcon, color: profileColor });
     saveProfileList();
     buildProfileListHtml();
 
@@ -89,7 +100,7 @@ function createProfile() {
 
 function resetDefaultProfile() {
     profileList = [
-        { key: 'default', name: 'Default Profile', icon: 'https://flyffipedia.com/Icons/Monsters/aibatt.png'}
+        { key: 'default', name: 'Default Profile', icon: 'https://flyffipedia.com/Icons/Monsters/aibatt.png', color: '#1f1f1f'}
     ];
     saveProfileList();
     buildProfileListHtml();
@@ -98,7 +109,8 @@ function resetDefaultProfile() {
 interface GameProfile {
     key: string;
     name: string,
-    icon: string
+    icon: string,
+    color?: string
 }
 
 class Game {
@@ -108,8 +120,8 @@ class Game {
         selectProfileDialog.hide();
         document.querySelector<HTMLElement>('.title-bar-title').innerText = 'Flyff Universe - ' + selectedProfile.name;
         document.querySelector<HTMLElement>('title').innerText = 'Flyff Universe - ' + selectedProfile.name;
-
         document.querySelectorAll('[data-show-after="profile-select"]').forEach((e: HTMLElement) => e.classList.remove('hidden'));
+        setTitleColor(selectedProfile.color ? selectedProfile.color : '#1f1f1f');
     }
 
     public sendKeypress(keyCode: string, modifiers: any): void {
@@ -163,17 +175,9 @@ gameview.addEventListener('console-message', (e: any) => {
 document.querySelector('.home-btn')?.addEventListener('click', () => game.navigate('https://universe.flyff.com/user/login'));
 document.querySelector('.play-btn')?.addEventListener('click', () => game.navigate('https://universe.flyff.com/play'));
 document.querySelector('.toggle-mute-btn')?.addEventListener('click', () => game.toggleAudioMute());
-document.querySelector('.new-window-btn')?.addEventListener('click', () => window.electronAPI.window.createGameView());
-document.querySelector('.flyffipedia-btn')?.addEventListener('click', () => console.log(window.electronAPI.window.createWebView('https://flyffipedia.com/')));
-document.querySelector('.madrigalinside-btn')?.addEventListener('click', () => console.log(window.electronAPI.window.createWebView('https://madrigalinside.com/')));
-document.querySelector('.flyffulator-btn')?.addEventListener('click', () => console.log(window.electronAPI.window.createWebView('https://flyffulator.com/')));
-document.querySelector('.madrigalmaps-btn')?.addEventListener('click', () => console.log(window.electronAPI.window.createWebView('https://www.madrigalmaps.com/')));
-document.querySelector('.modelviewer-btn')?.addEventListener('click', () => console.log(window.electronAPI.window.createWebView('https://flyffmodelviewer.com/')));
+document.querySelector('.new-window-btn')?.addEventListener('click', () => electronAPI.window.createGameView());
 
-window.electronAPI.game.onSendKeypress((event: any, keyCode: string, modifiers: any) => game.sendKeypress(keyCode, modifiers));
-
-readProfileList();
-buildProfileListHtml();
+electronAPI.game.onSendKeypress((event: any, keyCode: string, modifiers: any) => game.sendKeypress(keyCode, modifiers));
 
 document.querySelector('#cancel-create-profile-btn').addEventListener('click', () => {
     createProfileDialog.hide();
@@ -181,5 +185,8 @@ document.querySelector('#cancel-create-profile-btn').addEventListener('click', (
 });
 
 document.querySelector('#save-create-profile-btn').addEventListener('click', () => createProfile());
+
+readProfileList();
+buildProfileListHtml();
 
 selectProfileDialog.show();

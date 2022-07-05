@@ -1,3 +1,5 @@
+/// <amd-module name="bootstrap"/>
+
 import { contextBridge, ipcRenderer } from 'electron';
 
 window.addEventListener("DOMContentLoaded", () => {
@@ -56,5 +58,3 @@ contextBridge.exposeInMainWorld('electronAPI', {
         onPaste: (callback: any) => ipcRenderer.on('game:paste', callback),
     },
 });
-
-// window.electronAPI.onGameSendKeypress((event, keyCode, modifiers) => game.sendKeypress(keyCode, modifiers));

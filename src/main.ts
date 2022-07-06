@@ -1,10 +1,11 @@
-import { app, BrowserWindow, ipcMain, globalShortcut } from "electron";
+import { app, BrowserWindow, ipcMain, globalShortcut, webContents } from "electron";
 import { windowStateKeeper, WindowStateKeeper } from './util/windowStateKeeper';
 import * as path from "path";
 
 let gameviewWindowStateKeeper: WindowStateKeeper;
+let registeredGlobalShortcuts: Array<string> = [];
 
-function createGameView() {
+function createGameView(openDevTools = false) {
     const wnd = new BrowserWindow({
         x: gameviewWindowStateKeeper.x,
         y: gameviewWindowStateKeeper.y,
@@ -26,6 +27,10 @@ function createGameView() {
     }
 
     wnd.loadFile(path.join(__dirname, "../gameview.html"));
+
+    if(openDevTools) {
+        wnd.webContents.openDevTools();
+    }
 
     return wnd;
 }
@@ -90,7 +95,14 @@ ipcMain.handle("window:setAlwaysOnTop", (event, flag, level: 10) => {
     return win.isAlwaysOnTop();
 });
 
-ipcMain.on("window:createWebView", (ev, url: string) => createWebView(url));
+ipcMain.handle("globalShortcut:isRegistered", (_, keyCode: string) => globalShortcut.isRegistered(keyCode));
+ipcMain.handle("globalShortcut:register", (event, keyCode: string) => {
+    const webContents = event.sender;
+    return globalShortcut.register(keyCode, () => webContents.send('game:sendKeypress', keyCode));
+});
+ipcMain.on("globalShortcut:unregister", (_, keyCode: string) => globalShortcut.unregister(keyCode));
+
+ipcMain.on("window:createWebView", (_, url: string) => createWebView(url));
 ipcMain.on("window:createGameView", () => createGameView());
 app.on("window-all-closed", () => app.quit());
 
@@ -98,5 +110,5 @@ app.on("window-all-closed", () => app.quit());
 (async function startup() {
     gameviewWindowStateKeeper = await windowStateKeeper('main');
     await app.whenReady();
-    createGameView();
+    createGameView(true);
 })();

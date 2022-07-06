@@ -57,4 +57,9 @@ contextBridge.exposeInMainWorld('electronAPI', {
         onCopy: (callback: any) => ipcRenderer.on('game:copy', callback),
         onPaste: (callback: any) => ipcRenderer.on('game:paste', callback),
     },
+    globalShortcut: {
+        isRegistered: (keyCode: string) => ipcRenderer.invoke('globalShortcut:isRegistered', keyCode),
+        register: (keyCode: string) => ipcRenderer.invoke('globalShortcut:register', keyCode),
+        unregister: (keyCode: string) => ipcRenderer.send('globalShortcut:unregister', keyCode),
+    }
 });

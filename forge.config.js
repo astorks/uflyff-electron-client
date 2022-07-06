@@ -1,3 +1,5 @@
+const { exec } = require("child_process");
+
 module.exports = {
     packagerConfig: {
         icon: "./img/app-icon",
@@ -27,8 +29,14 @@ module.exports = {
         }
     ],
     hooks: {
-        generateAssets: async (forgeConfig, platform, arch) => {
-            console.log('We should generate some assets here');
-        }
+        generateAssets: (forgeConfig, platform, arch) => new Promise((resolve, reject) => {
+            exec('npm run build', (error, stdout, stderr) => {
+                if (error) {
+                    reject(error);
+                    return;
+                }
+                resolve(stdout);
+            });
+        })
     }
 }

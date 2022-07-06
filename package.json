@@ -5,7 +5,7 @@
   "main": "./dist/main.js",
   "scripts": {
     "build": "tsc",
-    "watch": "tsc -w",
+    "watch": "tsc -w && electron-forge start",
     "lint": "eslint -c .eslintrc --ext .ts ./src",
     "start": "electron-forge start",
     "package": "electron-forge package",

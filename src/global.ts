@@ -17,6 +17,12 @@ declare interface ElectronApiInterface {
         onSendKeypress(callback: (event: any, keyCode: string, modifiers: any) => void): void,
         onCopy(callback: (event: any) => void): void,
         onPaste(callback: (event: any) => void): void,
+    },
+
+    globalShortcut: {
+        isRegistered: (keyCode: string) => Promise<boolean>,
+        register: (keyCode: string) => Promise<boolean>,
+        unregister: (keyCode: string) => void,
     }
 }
 

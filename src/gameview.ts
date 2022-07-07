@@ -22,6 +22,19 @@ function makeid(length: number): string {
     return result;
 }
 
+async function registerGlobalShortcut(event: Event, keyCode: string) {
+    event.stopPropagation();
+    event.preventDefault();
+
+    if(await electronAPI.globalShortcut.isRegistered(keyCode)) {
+        electronAPI.globalShortcut.unregister(keyCode);
+        console.log('Unregister global shortcut', keyCode);
+    } else {
+        await electronAPI.globalShortcut.register(keyCode);
+        console.log('Register global shortcut', keyCode);
+    }
+}
+
 function readProfileList() {
     const profileListStorage = window.localStorage.getItem("profile-list");
     if(profileListStorage) {
@@ -177,7 +190,7 @@ document.querySelector('.play-btn')?.addEventListener('click', () => game.naviga
 document.querySelector('.toggle-mute-btn')?.addEventListener('click', () => game.toggleAudioMute());
 document.querySelector('.new-window-btn')?.addEventListener('click', () => electronAPI.window.createGameView());
 
-electronAPI.game.onSendKeypress((event: any, keyCode: string, modifiers: any) => game.sendKeypress(keyCode, modifiers));
+electronAPI.game.onSendKeypress((_: any, keyCode: string, modifiers: any) => game?.sendKeypress(keyCode, modifiers));
 
 document.querySelector('#cancel-create-profile-btn').addEventListener('click', () => {
     createProfileDialog.hide();

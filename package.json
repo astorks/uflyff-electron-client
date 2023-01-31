@@ -33,7 +33,7 @@
   "dependencies": {
     "@types/bootstrap": "^5.2.6",
     "bootstrap": "^5.2.3",
-    "bootstrap-icons": "^1.8.3",
+    "bootstrap-icons": "^1.10.3",
     "custom-electron-titlebar": "^4.1.0",
     "electron-settings": "^4.0.2",
     "electron-squirrel-startup": "^1.0.0"
